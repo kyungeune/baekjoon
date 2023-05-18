@@ -1,24 +1,19 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
-int main()
-{
-	char why[10001]="";
-	char s[101]="";
+int main(void) {
+    char s[102];
+    char answer;
 
-	for (int i = 0; i < 100; i++)
-	{
-		fgets(s, sizeof(s),stdin);
-		strcat(why, s);
+    while (1) {
+        answer = fgets(s, sizeof(s), stdin);
+        if (answer == NULL)
+            break;
+        if (s[strlen(s) + 1] == NULL)
+            break;
+        printf("%s", s);
+    }
 
-		if (s[strlen(s)-1] == '\n')
-			break;
-	}
-
-	//strcat(why, '\0');
-	printf("%s", why);
-
-	return 0;
+    return 0;
 }
