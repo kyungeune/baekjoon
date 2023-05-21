@@ -4,7 +4,7 @@
 
 int main(void) {
     char s[102];
-    char answer;
+    char* answer;
 
     while (1) {
         answer = fgets(s, sizeof(s), stdin);
@@ -12,7 +12,7 @@ int main(void) {
             break;
         if (s[strlen(s) + 1] == NULL)
             break;
-        printf("%s", s);
+        fputs(s, stdout);
     }
 
     return 0;
