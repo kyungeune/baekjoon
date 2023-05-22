@@ -3,14 +3,37 @@
 #include <stdlib.h>
 int main(void)
 {
-	int* A;
-	int n = 3;
+	int x, y, z, temp=0;
 
-	A = (int*)malloc(sizeof(int) * n);
+	scanf("%d %d %d", &x, &y, &z);
 
-	for (int i = 0; i < n; i++) {
 
+	if (x < y)
+	{
+		temp = x;
+		x = y;
+		y = temp;
 	}
+	if (x < z) 
+	{
+		temp = x;
+		x = z;
+		z = temp;
+	}
+	if (x < y)
+	{
+		temp = x;
+		x = y;
+		y = temp;
+	}
+	if (y < z)
+	{
+		temp = y;
+		y = z;
+		z = temp;
+	}
+
+	printf("%d %d %d", z, y, x);
 
 	return 0;
 }
