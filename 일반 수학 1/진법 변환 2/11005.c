@@ -4,16 +4,22 @@
 
 int main(void)
 {
-	char answer[100001];
-	int size=0, a = 0;
-	long long n = 0, b, bk = 1;
+	long long neww;
+	long long k;
+	long long si = 0;
+	char s[100001];
 
-	scanf("%llu %llu", &n, &b);
+	scanf("%llu %llu", &neww, &k);
 
-	while (n > 0) {
-		n -= bk;
+	while (neww > 0) {
+		s[si++] = neww % k;
+		neww /= k;
 	}
-	answer[a] = '\0';
-
-	printf("%s", answer);
+	
+	for (long long i = si - 1; i >= 0; i--) {
+		if (s[i] >= 0 && s[i] <= 9)
+			printf("%c", s[i]+'0');
+		else
+			printf("%c", s[i] - 10 + 'A');
+	}
 }

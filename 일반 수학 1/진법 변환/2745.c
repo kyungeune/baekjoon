@@ -13,10 +13,10 @@ int main(void)
 	for (size = 0; n[size] != '\0'; size++);
 
 	for (int i = size - 1; i>=0; i--) {
-		if (n[i] >= 48 && n[i] <= 57) {
+		if (n[i] >= 48 && n[i] <= 57) { //숫자면
 			answer += bk * (n[i] - 48);
 		}
-		else {
+		else { //알파벳이면
 			answer += bk * (n[i] - 55);
 		}
 		bk *= b;
