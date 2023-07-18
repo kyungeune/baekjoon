@@ -1,21 +1,39 @@
 #define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
-/*
-MenOfPassion(A[], n) {
-    sum <- 0;
-    for i <- 1 to n //1번
-        for j <- 1 to n //2번
-            for k <- 1 to n //3번
-                sum <- sum + A[i] × A[j] × A[k]; # 코드1
-    return sum;
-}
-*/
+
+#include <stdlib.h>
+
+#include <string.h>
+
+//O(g(n)) = {f(n) | 모든 n ≥ n0에 대하여 f(n) ≤ c × g(n)인 양의 상수 c와 n0가 존재한다}
+
+//an+b>cn   b>(c-a)n
+
 int main(void)
+
 {
-    long long n;
-    scanf("%llu", &n);
-    if (n == 1)
-        printf("1\n3");
-    else
-        printf("%llu\n3", n * n * n);
+
+	int a1, a2, c, n0, flag = 1;
+
+	scanf("%d %d %d %d", &a1, &a2, &c, &n0);
+
+
+
+	while (flag == 1 && n0 <= 100) {
+
+		if (a2 > (c - a1) * n0)
+
+			flag = 0;
+
+		n0++;
+
+	}
+
+
+
+	printf("%d", flag);
+
+	return 0;
+
 }
