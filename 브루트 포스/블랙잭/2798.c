@@ -3,22 +3,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-long long realSum = -1;
-void pick(long long A[], long long picked[], long long n, long long m, long long toPick)
+int realSum = -1;
+void pick(int* A, int* picked, int n, int m, int toPick)
 {
-	long long sum = 0;
+	int sum = 0;
+	int lastIndex = 3 - toPick - 1;
 
-	for (long long i = 0; i < 3 - toPick; i++) {
+	for (int i = 0; i <= lastIndex; i++) {
 		sum += A[picked[i]];
-		//printf("%llu ", A[picked[i]]);
+		//printf("%d ", A[picked[i]]);
 		if (sum > m)
 			return;
 	}
+	//printf("\n");
 
 	if (toPick == 0) {
 		sum = 0;
 
-		for (long long i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++) {
 			sum += A[picked[i]];
 			if (sum > m)
 				return;
@@ -28,41 +30,43 @@ void pick(long long A[], long long picked[], long long n, long long m, long long
 			realSum = sum;
 	}
 
-	long long smallest = 0;
+	int smallest = 0;
 
 	if (toPick == 3)
 		smallest = 0;
 	else
-		smallest = picked[3-toPick-1];
+		smallest = picked[lastIndex];
 
-	for (long long i = smallest; i < n; i++) {
-		long long j, flag = 0;
-		for (j = 0; j < 3-toPick; j++)
+	for (int i = smallest; i < n; i++) {
+		if (realSum == m)
+			break;
+		int j, flag = 0;
+		for (j = 0; j <= lastIndex; j++)
 			if (picked[j] == i)
 				flag = 1;
 		if (flag == 1)	continue;
-		picked[3-toPick] = i;
+		picked[lastIndex + 1] = i;
 		pick(A, picked, n, m, toPick - 1);
 	}
 }
 
 int main(void)
 {
-	long long n, m;
-	long long* A;
-	long long picked[3]={0,0,0};
+	int n, m;
+	int* A;
+	int picked[10000];
 
-	scanf("%lld %lld", &n, &m);
+	scanf("%d %d", &n, &m);
 
-	A = (long long*)malloc(sizeof(long long) * n);
+	A = (int*)malloc(sizeof(int) * n);
 
-	for (long long i = 0; i < n; i++) {
-		scanf("%lld", &A[i]);
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &A[i]);
 	}
 
 	pick(A, picked, n, m, 3);
 
-	printf("%lld", realSum);
+	printf("%d", realSum);
 
 	free(A);
 	return 0;
