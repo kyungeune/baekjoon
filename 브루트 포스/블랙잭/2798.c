@@ -1,73 +1,58 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-
-int realSum = -1;
-void pick(int* A, int* picked, int n, int m, int toPick)
+void merge(int A[], int p, int q, int r, int temp[])
 {
-	int sum = 0;
-	int lastIndex = 3 - toPick - 1;
+	int i = p, j = q + 1, k = p;
 
-	for (int i = 0; i <= lastIndex; i++) {
-		sum += A[picked[i]];
-		//printf("%d ", A[picked[i]]);
-		if (sum > m)
-			return;
-	}
-	//printf("\n");
-
-	if (toPick == 0) {
-		sum = 0;
-
-		for (int i = 0; i < 3; i++) {
-			sum += A[picked[i]];
-			if (sum > m)
-				return;
-		}
-
-		if (sum > realSum)
-			realSum = sum;
+	while (i <= q && j <= r) {
+		if (A[i] < A[j]) //더 작은 값을 temp에 차례대로 담는다.
+			temp[k++] = A[i++];
+		else
+			temp[k++] = A[j++];
 	}
 
-	int smallest = 0;
-
-	if (toPick == 3)
-		smallest = 0;
+	if (i > q) //남은 값들을 temp에 마저 담는다
+		for (; j <= r; j++, k++)
+			temp[k] = A[j];
 	else
-		smallest = picked[lastIndex];
+		for (; i <= q; i++, k++)
+			temp[k] = A[i];
 
-	for (int i = smallest; i < n; i++) {
-		if (realSum == m)
-			break;
-		int j, flag = 0;
-		for (j = 0; j <= lastIndex; j++)
-			if (picked[j] == i)
-				flag = 1;
-		if (flag == 1)	continue;
-		picked[lastIndex + 1] = i;
-		pick(A, picked, n, m, toPick - 1);
-	}
+	for (int z = p; z <= r; z++) //다시 A배열로 옮겨준다
+		A[z] = temp[z];
 }
 
+void mergeSort(int A[], int p, int r, int temp[])
+{
+	if (p < r) {
+		int q = (p + r) / 2;
+		mergeSort(A, p, q, temp);
+		mergeSort(A, q + 1, r, temp);
+		merge(A, p, q, r, temp);
+	}
+}
 int main(void)
 {
 	int n, m;
-	int* A;
-	int picked[10000];
-
 	scanf("%d %d", &n, &m);
-
-	A = (int*)malloc(sizeof(int) * n);
-
-	for (int i = 0; i < n; i++) {
+	int* A = (int*)malloc(sizeof(int) * n);
+	int* temp = (int*)malloc(sizeof(int) * n);
+	for (int i = 0; i < n; i++)
 		scanf("%d", &A[i]);
+	mergeSort(A, 0, n-1, temp);
+
+	for (int i = n-1; i >= 2; i--) {
+		int sum = 0;
+		for (int j = 0; j < 3; j++)
+			sum += A[i - j];
+		if (sum <= m) {
+			printf("%d", sum);
+			break;
+		}
 	}
 
-	pick(A, picked, n, m, 3);
-
-	printf("%d", realSum);
-
 	free(A);
+	free(temp);
 	return 0;
 }
