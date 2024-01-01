@@ -1,58 +1,70 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
-void merge(int A[], int p, int q, int r, int temp[])
-{
-	int i = p, j = q + 1, k = p;
 
-	while (i <= q && j <= r) {
-		if (A[i] < A[j]) //더 작은 값을 temp에 차례대로 담는다.
-			temp[k++] = A[i++];
-		else
-			temp[k++] = A[j++];
-	}
+int max = 0;
+void pick(int num[], int n, int picked[], int m, int toPick, int limit) {
+    int i;
+    int lastIndex;
+    int smallest;
 
-	if (i > q) //남은 값들을 temp에 마저 담는다
-		for (; j <= r; j++, k++)
-			temp[k] = A[j];
-	else
-		for (; i <= q; i++, k++)
-			temp[k] = A[i];
+    int sum = 0;
+    for (i = 0; i < m - toPick - 1; i++) {
+        sum += num[picked[i]];
+        if (sum > limit)
+            return;
+    }
 
-	for (int z = p; z <= r; z++) //다시 A배열로 옮겨준다
-		A[z] = temp[z];
+    if (toPick == 0) {
+        sum = 0;
+        for (i = 0; i < m; i++) {
+            sum += num[picked[i]];
+            if (sum > limit)
+                return;
+        }
+        
+        if (sum > max && sum <= limit)
+            max = sum;
+
+        return;
+    }
+
+    lastIndex = m - toPick - 1;
+
+    if (m == toPick)
+        smallest = 0;
+    else
+        smallest = picked[lastIndex] + 1;
+
+    for (i = 0; i < n; i++) {
+        int j = 0; int flag = 0;
+        for (j = 0; j <= lastIndex; j++)
+            if (picked[j] == i) flag = 1;
+        if (flag == 1) continue;
+        picked[lastIndex + 1] = i;
+        pick(num, n, picked, m, toPick - 1, limit);
+    }
+
 }
 
-void mergeSort(int A[], int p, int r, int temp[])
-{
-	if (p < r) {
-		int q = (p + r) / 2;
-		mergeSort(A, p, q, temp);
-		mergeSort(A, q + 1, r, temp);
-		merge(A, p, q, r, temp);
-	}
-}
 int main(void)
 {
-	int n, m;
-	scanf("%d %d", &n, &m);
-	int* A = (int*)malloc(sizeof(int) * n);
-	int* temp = (int*)malloc(sizeof(int) * n);
-	for (int i = 0; i < n; i++)
-		scanf("%d", &A[i]);
-	mergeSort(A, 0, n-1, temp);
+    int n, limit;
+    int* picked;
+    int* num;
 
-	for (int i = n-1; i >= 2; i--) {
-		int sum = 0;
-		for (int j = 0; j < 3; j++)
-			sum += A[i - j];
-		if (sum <= m) {
-			printf("%d", sum);
-			break;
-		}
-	}
+    scanf("%d %d", &n, &limit);
 
-	free(A);
-	free(temp);
-	return 0;
+    picked = (int*)malloc(sizeof(int) * 3);
+    num = (int*)malloc(sizeof(int) * n);
+
+    for (int i = 0; i < n; i++)
+        scanf("%d", &num[i]);
+
+    pick(num, n, picked, 3, 3, limit);
+
+    printf("%d", max);
+
+    free(picked);
+    return 0;
 }

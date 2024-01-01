@@ -2,42 +2,24 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-//counting정렬로 푸세요^
+
 int main(void)
 {
-	int n = 0, min = 0, minIdx = 0, i, j, z;
+	int n = 0, num = 0;
 	scanf("%d", &n);
-	int* B = (int*)malloc(sizeof(int) * n);
+	int* B = (int*)malloc(sizeof(int) * 10001);
+	memset(B, 0, 10001 * sizeof(int));
 
-	for (i = 0; i < n; i++)
-	{
-		int num;
+	for (int i = 0; i < n; i++) { //n개의 숫자를 입력받는다
 		scanf("%d", &num);
-		if (i == 0)
-			B[i] = num;
-
-		for (j = 0; j < i; j++)
-		{
-			if (num < B[j])
-			{
-				int tmp = B[j];
-				B[j] = num;
-				for (z = i; z > j + 1; z--) //하나씩 뒤로 미루기
-				{
-					B[z] = B[z - 1];
-				}
-				B[z] = tmp;
-				break;
-			}
-		}
-		if (j == i)
-			B[i] = num;
-
+		B[num]++;
 	}
 
 
-	for (int i = 0; i < n; i++)
-		printf("%d\n", B[i]);
+	for (int i = 1; i < 10001; i++) { 
+		for (int j = 0; j < B[i]; j++)
+			printf("%d\n", i);
+	}
 
 	free(B);
 	return 0;
