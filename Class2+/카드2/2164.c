@@ -56,7 +56,7 @@ element dequeue(QueueType* q, int size)
 	if (is_empty(q))
 		error("큐가 공백상태입니다");
 	q->front = (q->front + 1) % size;
-	return q->data[q->front];	
+	return q->data[q->front];
 }
 
 int main(void)
