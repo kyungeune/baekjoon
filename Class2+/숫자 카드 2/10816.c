@@ -28,25 +28,25 @@ void swap(int* a, int* b) {
 	*b = temp;
 }
 
-void Max_Heapify(int* A, int i, int size) {
+void Max_Heapify(element* A, int i, int size) {
 	int l = left(i);
 	int r = right(i);
-	int smallest;
+	int largest;
 
-	if (l < size && A[l] < A[i]) {
-		smallest = l;
+	if (l < size && A[l].num < A[i].num) {
+		largest = l;
 	}
 	else {
-		smallest = i;
+		largest = i;
 	}
 
-	if (r < size && A[r] < A[smallest]) {
-		smallest = r;
+	if (r < size && A[r].num < A[largest].num) {
+		largest = r;
 	}
 
-	if (smallest != i) {
-		swap(&A[i], &A[smallest]);
-		Max_Heapify(A, smallest, size);
+	if (largest != i) {
+		swap(&A[i], &A[largest]);
+		Max_Heapify(A, largest, size);
 	}
 }
 
@@ -104,6 +104,7 @@ void push(QueueType* q, int size, int k)
 		q->front = q->rear = 0;
 		q->rear = (q->rear + 1) % size;
 		q->data[q->rear] = item;
+		Build_Max_Heap(q->data, size);
 	}
 	else {
 		int nowSize = getSize(q, size);
@@ -111,9 +112,11 @@ void push(QueueType* q, int size, int k)
 		if (sR == -1) {
 			q->rear = (q->rear + 1) % size;
 			q->data[q->rear] = item;
+			Build_Max_Heap(q->data, nowSize + 1);
 		}
 		else {
 			q->data[sR].cnt++;
+			Build_Max_Heap(q->data, nowSize);
 		}
 	}
 }
@@ -155,10 +158,10 @@ int main(void)
 		int k;
 		scanf("%d", &k);
 		push(&queue, size, k); // 삽입
-		nowSize = getSize(&queue, size); // 삽입한 직후 queue의 크기
+		// nowSize = getSize(&queue, size); // 삽입한 직후 queue의 크기
 		// 최악의 경우 n ^ 2 정렬, nlogn이 보장된 정렬방법 사용해야 함
 		// qsort(queue.data, nowSize + 1, sizeof(element), compare); // qsort 
-		HeapSort(queue.data, nowSize + 1);
+		// HeapSort(queue.data, nowSize + 1);
 		
 	}
 	// 넣기 끝!
