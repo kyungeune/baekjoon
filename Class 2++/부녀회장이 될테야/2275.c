@@ -16,9 +16,9 @@ int main(void)
 					a[i][j] += a[i - 1][k];
 				}
 			}
-			//printf("%d", a[i][j]);
+			printf("%d ", a[i][j]);
 		}
-		//printf("\n");
+		printf("\n");
 
 	}
 

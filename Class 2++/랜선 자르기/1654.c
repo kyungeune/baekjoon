@@ -30,6 +30,9 @@ long long binarySearch(long long save[], long long st, long long ed, long long f
 // 4 4 50 50 50 50
 // 2 3 6 7 => 3 3 3 3
 // 3 7 87 67 97
+// 1 2 6 7 
+// 1 1 1 7
+// 1 3 4 9 6
 // 5 4 2147483645 2147483645 2147483645 2147483645 2147483646
 // N개보다 많이 만드는 것도 N개를 만드는 것에 포함된다. 
 long long main(void)

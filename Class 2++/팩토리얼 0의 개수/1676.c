@@ -8,19 +8,23 @@ int main(void)
 
 	for (int i = 1; i <= n; i++) {
 		int imsi = i;
+
 		if (imsi % 2 == 0) {
 			while (imsi >= 2 && imsi % 2 == 0) {
 				imsi /= 2;
 				e++;
 			}
 		}
+
 		imsi = i;
+
 		if (imsi % 5 == 0) {
 			while (imsi >= 5 && imsi % 5 == 0) {
 				imsi /= 5;
 				o++;
 			}
 		}
+
 	}
 
 	while (e > 0 && o > 0) {
