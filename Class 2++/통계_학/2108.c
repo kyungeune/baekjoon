@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 typedef struct nums {
 	long long cnt, num;
 }nums;
@@ -67,34 +68,41 @@ int main(void)
 	qsort(fre, f, sizeof(long long), compare);
 	qsort(a, ai, sizeof(nums), compare2);
 
-	// 평균+반올림
-	double db = ((double)sum / (double)n) * 10;
-	db = abs(db) % 10;
-	db = (int)db; // 이걸로 값확인
-	//printf("((double)sum / (double)n)%0.f\n", ((double)sum / (double)n));
-	if (((double)sum / (double)n) > 0) {
-		if (db >= 5)
-			printf("%0.f\n", ((double)sum / (double)n) + 1);
-		else
-			printf("%lld\n", ((double)sum / (double)n));
-	}
-	else if ((int)(((double)sum / (double)n)) == 0) {
+	// 평균+반올림 1
+	double db = ((double)sum / (double)n);
+	if (abs(round(db)) == 0)
 		printf("0\n");
+	else
+		printf("%0.f\n", round(db));
+	// 미드 2
+	int pl = 0;
+	int this = 0;
+	if (n % 2 == 0)
+		this = n / 2 - 1;
+	else
+		this = n / 2;
+
+	for (int i = 0; i < ai; i++) {
+		int c = a[i].cnt;
+		int end = 0;
+		while (c > 0) {
+			if (pl == this) {
+				printf("%lld\n", a[i].num);
+				end = 1;
+				break;
+			}
+			pl++;
+			c--;
+		}
+		if (end == 1)
+			break;
 	}
-	else {
-		if (db >= 5)
-			printf("%0.f\n", ((double)sum / (double)n));
-		else
-			printf("%lld\n", ((double)sum / (double)n) + 1);
-	}
-	// 미드
-	printf("%lld\n", a[ai / 2].num); // 홀수이므로 걍 가운데 값
-	// 최빈
+	// 최빈 3
 	if (f == 1)
 		printf("%lld\n", fre[0]);
 	else
 		printf("%lld\n", fre[1]); // cnt 최대인애들 long long 배열에 모아놓고 qsort하고 1번째값 출력
-	// 범위
+	// 범위 4
 	printf("%lld\n", max - min); // 하나인경우 0, 최댓값-최솟값
 
 	free(a);
