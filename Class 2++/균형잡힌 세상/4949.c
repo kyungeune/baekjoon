@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
-/////////논리가 틀림
+
 int main(void)
 {
 	char s[102];
