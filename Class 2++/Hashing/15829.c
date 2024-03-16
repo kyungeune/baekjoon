@@ -3,7 +3,7 @@
 #include <stdlib.h>
 int main(void)
 {
-	long long sam = 1, ans = 0;
+	long long sam = 0, ans = 0;
 	int n;
 
 	scanf("%d", &n);
@@ -13,12 +13,12 @@ int main(void)
 
 	for (int i = 0; i < n; i++) {
 
-		// printf("%d\n", ans);
-		ans *= (sam * (c[i] - 96)) % 1234567891;
-		sam *= 31;
+		sam = (sam + 31) % 1234567891;
+		ans = (ans + (sam * (c[i] - 36)) % 1234567891) % 1234567891;
 	}
+	
 
-	printf("%lld", ans % 1234567891);
+	printf("%lld", ans);
 
 
 	free(c);
