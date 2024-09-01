@@ -4,7 +4,7 @@
 #include <string.h>
 int reset(int** s, int x, int y, int a, int b)
 {
-	if (x < 0 || x >= a || y < 0 || y >= b)
+	if (x <= 0 || x > a || y <= 0 || y > b)
 		return 0;
 
 	s[x][y] = 0;
