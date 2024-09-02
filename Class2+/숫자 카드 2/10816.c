@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define OFFSET 10000000  // 최소값이 -10,000,000 이므로 이를 상쇄하기 위한 오프셋
+#define OFFSET 10000000  // 최소값 -10,000,000을 0으로 만들기 위한 오프셋
 #define MAX_NUM 20000001 // -10,000,000 ~ 10,000,000의 범위를 다루기 위한 배열 크기
 
 typedef struct {
@@ -42,7 +42,7 @@ int main(void)
     int n = 0, m = 0;
     scanf("%d", &n);
     int size = MAX_NUM;
-    queue.data = (int*)calloc(size, sizeof(int));  // 카운트 배열 초기화
+    queue.data = (int*)calloc(size, sizeof(int));  // 카운트 배열을 0으로 초기화(calloc 사용)
     queue.front = queue.rear = 0;
 
     for (int i = 0; i < n; i++) {
@@ -55,9 +55,9 @@ int main(void)
     for (int i = 0; i < m; i++) {
         int k;
         scanf("%d", &k);
-        printf("%d ", getCnt(&queue, k));
+        printf("%d ", getCnt(&queue, k)); // 각 숫자가 몇 번 등장했는지 출력
     }
 
-    destroy_queue(&queue);
+    destroy_queue(&queue); // 동적으로 할당된 메모리 해제
     return 0;
 }
