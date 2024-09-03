@@ -9,21 +9,14 @@ int main(void)
 
 	int* k = (int*)malloc((n+1) * sizeof(int));
 
-	for (int i = 0; i < n + 1; i++)
+	for (int i = 0; i < n + 1; i++) // 초기화
 		k[i] = 0;
 
-	//if (k == NULL) {
-	//	printf("1\n1 0");
-	//	return 0;
-	//}
+	for (int i = 0; sum < n;) { // 지금까지 입력받은 것의 합계(sum)가 n미만일때 계속 입력받기
+		scanf("%d", &m); // 입력
 
-	for (int i = 0; sum < n;) {
-		scanf("%d", &m);
-
-		if (m != 0) {
-			sum += m;
-			k[i++] = m;
-			cnt++;
+		if (m != 0) { // 0이 아닌 경우에만 입력받기
+			k[cnt++] = m; // cnt = 입력받은 것의 개수(0 제외)
 		}
 	}
 
@@ -35,14 +28,22 @@ int main(void)
 		if (imsi < t)
 			tn++;
 		else {
-			tn += (int)(imsi / t);
-			if (imsi % t != 0)
+			tn += (int)(imsi / t); // 0이 아닌 것들을 입력받았기 때문에 
+			if (imsi % t != 0) // 나머지가 존재할 경우(=t의 배수가 아닐 경우)
 				tn++;
 		}
 
 	}
 
-	printf("%d\n%d %d", tn, (int)(sum / p), (int)(sum % p));  // t개수, pen개수, 나머지개수
+	printf("%d\n", tn);  // t개수, pen개수, 나머지개수
+
+	if (n / p < 1)
+		printf("1 ");
+	else
+		printf("%d ", (int)(n / p));
+
+	printf("%d", n % p);
+
 
 	free(k);
 
